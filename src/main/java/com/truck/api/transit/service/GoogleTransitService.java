@@ -10,14 +10,15 @@ import com.truck.api.transit.model.Transit;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @Service
 public class GoogleTransitService implements TransitService {
     private final GeoApiContext context;
+    private DistanceMatrixNullHandler distanceMatrixNullHandler;
 
-    public GoogleTransitService(GeoApiContext context) {
+    public GoogleTransitService(GeoApiContext context, DistanceMatrixNullHandler distanceMatrixNullHandler) {
         this.context = context;
+        this.distanceMatrixNullHandler = distanceMatrixNullHandler;
     }
 
     public void addTransit(Transit transit) {
@@ -28,14 +29,7 @@ public class GoogleTransitService implements TransitService {
                 new String[]{transit.getDestAddress()});
         try {
             final DistanceMatrix matrix = distanceMatrix.await();
-            Optional<Distance> distance = Optional.ofNullable(matrix.rows[0].elements[0].distance);
-
-            Optional.of(matrix.rows)
-                    .map(m -> m[0])
-                    .map(e -> e.elements)
-                    .map(eleZero -> eleZero[0]);
-
-            String distanceStr = distance.map(c -> c.humanReadable).orElse("0");
+            Distance distance = distanceMatrixNullHandler.unpack(matrix);
         } catch (ApiException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
