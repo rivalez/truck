@@ -1,5 +1,6 @@
 package com.truck.api.transit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.joda.time.DateTime;
 
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.Id;
 import java.math.BigDecimal;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public final class Transit {
 
     @Id
@@ -18,7 +20,6 @@ public final class Transit {
     private DateTime date;
     private BigDecimal price;
     private String distance;
-
 
     public String getSourceAddress() {
         return sourceAddress;

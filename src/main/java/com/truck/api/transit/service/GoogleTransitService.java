@@ -8,6 +8,9 @@ import com.truck.api.transit.repository.TransitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class GoogleTransitService implements TransitService {
     private final GeoApiContext context;
@@ -16,10 +19,11 @@ public class GoogleTransitService implements TransitService {
     private final DistanceMatrixResolver distanceMatrixResolver;
 
 
+    @Autowired
     GoogleTransitService(GeoApiContext context,
-                         @Autowired DistanceMatrixNullHandler distanceMatrixNullHandler,
-                         @Autowired TransitRepository transitRepository,
-                         @Autowired DistanceMatrixResolver distanceMatrixResolver) {
+                         DistanceMatrixNullHandler distanceMatrixNullHandler,
+                         TransitRepository transitRepository,
+                         DistanceMatrixResolver distanceMatrixResolver) {
         this.context = context;
         this.distanceMatrixNullHandler = distanceMatrixNullHandler;
         this.transitRepository = transitRepository;
@@ -31,5 +35,12 @@ public class GoogleTransitService implements TransitService {
         final Distance distance = distanceMatrixNullHandler.unpack(matrix);
         transit.setDistance(distance.humanReadable);
         transitRepository.save(transit);
+    }
+
+    @Override
+    public List<Transit> getAll() {
+        final List<Transit> transits = new ArrayList<>();
+        transitRepository.findAll().forEach(transits::add);
+        return transits;
     }
 }
