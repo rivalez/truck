@@ -15,11 +15,11 @@ public class GoogleTransitService implements TransitService {
     private final TransitRepository transitRepository;
     private final DistanceMatrixResolver distanceMatrixResolver;
 
-    @Autowired
+
     GoogleTransitService(GeoApiContext context,
-                         DistanceMatrixNullHandler distanceMatrixNullHandler,
-                         TransitRepository transitRepository,
-                         DistanceMatrixResolver distanceMatrixResolver) {
+                         @Autowired DistanceMatrixNullHandler distanceMatrixNullHandler,
+                         @Autowired TransitRepository transitRepository,
+                         @Autowired DistanceMatrixResolver distanceMatrixResolver) {
         this.context = context;
         this.distanceMatrixNullHandler = distanceMatrixNullHandler;
         this.transitRepository = transitRepository;
