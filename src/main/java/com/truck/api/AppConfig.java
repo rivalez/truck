@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
 
-    @Value("$api.key")
+    @Value("${api.key}")
     private String apiKey;
 
     @Bean
