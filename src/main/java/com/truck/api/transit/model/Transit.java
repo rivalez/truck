@@ -2,17 +2,23 @@ package com.truck.api.transit.model;
 
 import org.joda.time.DateTime;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 
+@Entity
 public final class Transit {
+
+    @Id
+    @GeneratedValue
+    private Long id;
     private String sourceAddress;
     private String destAddress;
     private DateTime date;
     private BigDecimal price;
-    private long distance;
+    private String distance;
 
-    private Transit() {
-    }
 
     public String getSourceAddress() {
         return sourceAddress;
@@ -30,46 +36,27 @@ public final class Transit {
         return price;
     }
 
-    public static final class TransitBuilder {
-        private String sourceAddress;
-        private String destAddress;
-        private DateTime date;
-        private BigDecimal price;
+    public void setSourceAddress(String sourceAddress) {
+        this.sourceAddress = sourceAddress;
+    }
 
-        private TransitBuilder() {
-        }
+    public void setDestAddress(String destAddress) {
+        this.destAddress = destAddress;
+    }
 
-        public static TransitBuilder builder() {
-            return new TransitBuilder();
-        }
+    public void setDate(DateTime date) {
+        this.date = date;
+    }
 
-        public TransitBuilder withSourceAddress(String sourceAddress) {
-            this.sourceAddress = sourceAddress;
-            return this;
-        }
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
-        public TransitBuilder withDestAddress(String destAddress) {
-            this.destAddress = destAddress;
-            return this;
-        }
+    public String getDistance() {
+        return distance;
+    }
 
-        public TransitBuilder withDate(DateTime date) {
-            this.date = date;
-            return this;
-        }
-
-        public TransitBuilder withPrice(BigDecimal price) {
-            this.price = price;
-            return this;
-        }
-
-        public Transit build() {
-            Transit transit = new Transit();
-            transit.price = this.price;
-            transit.destAddress = this.destAddress;
-            transit.sourceAddress = this.sourceAddress;
-            transit.date = this.date;
-            return transit;
-        }
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 }

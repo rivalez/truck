@@ -10,13 +10,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DistanceMatrixNullHandlerTest {
 
     @Test
-    public void shouldReturn_DistanceWith0() {
+    public void shouldReturn_MsgWithCouldNot() {
         //assign
+        final String COULD_NOT = "could not";
         DistanceMatrixNullHandler handler = new DistanceMatrixNullHandler();
         DistanceMatrixRow[] dummy = new DistanceMatrixRow[]{};
         //act
         Distance distance = handler.unpack(new DistanceMatrix(new String[]{}, new String[]{}, dummy));
         //assert
-        assertThat(distance.inMeters).isEqualTo(0);
+        assertThat(distance.humanReadable).contains(COULD_NOT);
     }
 }
