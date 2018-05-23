@@ -1,12 +1,14 @@
 package com.truck.api.transit.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.joda.time.DateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -15,9 +17,12 @@ public final class Transit {
     @Id
     @GeneratedValue
     private Long id;
+    @JsonProperty("source_address")
     private String sourceAddress;
+    @JsonProperty("destination_address")
     private String destAddress;
-    private DateTime date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date date;
     private BigDecimal price;
     private String distance;
 
@@ -29,7 +34,7 @@ public final class Transit {
         return destAddress;
     }
 
-    public DateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -45,7 +50,7 @@ public final class Transit {
         this.destAddress = destAddress;
     }
 
-    public void setDate(DateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

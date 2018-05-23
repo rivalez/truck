@@ -1,0 +1,6 @@
+{
+  "source_address":         "ul. Zakręt 8, Poznań",
+  "destination_address": "Złota 44, Warszawa",
+  "price":                          450,
+  "date":                          "2018-03-15"
+}

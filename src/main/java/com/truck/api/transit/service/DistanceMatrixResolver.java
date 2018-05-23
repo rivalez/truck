@@ -5,6 +5,7 @@ import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.TravelMode;
 import com.truck.api.transit.model.Transit;
 import org.springframework.stereotype.Component;
 
@@ -19,12 +20,13 @@ class DistanceMatrixResolver {
     DistanceMatrix resolveMatrix(final GeoApiContext context, final Transit transit) {
         DistanceMatrix distanceMatrix = null;
         final DistanceMatrixApiRequest distanceMatrixRequest =
-                DistanceMatrixApi.getDistanceMatrix(
-                        context,
-                        new String[]{transit.getSourceAddress()},
-                        new String[]{transit.getDestAddress()});
+                DistanceMatrixApi.newRequest(context);
         try {
-            distanceMatrix = distanceMatrixRequest.await();
+            distanceMatrix = distanceMatrixRequest
+                    .origins(transit.getSourceAddress())
+                    .destinations(transit.getDestAddress())
+                    .mode(TravelMode.DRIVING)
+                    .await();
         } catch (InterruptedException | IOException | ApiException e) {
             logger.log(Level.WARNING, "Could not parse distance request", e);
         }

@@ -14,8 +14,8 @@ class DistanceMatrixNullHandler {
         final Distance distance = new Distance();
         distance.humanReadable = COULD_NOT_PARSE_DISTANCE;
         return Optional.ofNullable(matrix)
-                .filter(ma -> ma.rows == null)
-                .filter(ma -> ma.rows.length < 1)
+                .filter(ma -> ma.rows != null)
+                .filter(ma -> ma.rows.length >= 1)
                 .map(ma -> ma.rows[0])
                 .map(e -> e.elements)
                 .map(eleZero -> eleZero[0])
