@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TransitDao {
+class TransitDao {
     private final TransitRepository transitRepository;
     private final TransitValidator transitValidator;
 
-    public TransitDao(TransitRepository transitRepository, TransitValidator transitValidator) {
+    TransitDao(TransitRepository transitRepository, TransitValidator transitValidator) {
         this.transitRepository = transitRepository;
         this.transitValidator = transitValidator;
     }
