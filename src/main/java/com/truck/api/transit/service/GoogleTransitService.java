@@ -4,29 +4,26 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.model.Distance;
 import com.google.maps.model.DistanceMatrix;
 import com.truck.api.transit.model.Transit;
-import com.truck.api.transit.repository.TransitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class GoogleTransitService implements TransitService {
     private final GeoApiContext context;
     private final DistanceMatrixNullHandler distanceMatrixNullHandler;
-    private final TransitRepository transitRepository;
+    private final TransitDao transitDao;
     private final DistanceMatrixResolver distanceMatrixResolver;
-
 
     @Autowired
     GoogleTransitService(GeoApiContext context,
                          DistanceMatrixNullHandler distanceMatrixNullHandler,
-                         TransitRepository transitRepository,
+                         TransitDao transitDao,
                          DistanceMatrixResolver distanceMatrixResolver) {
         this.context = context;
         this.distanceMatrixNullHandler = distanceMatrixNullHandler;
-        this.transitRepository = transitRepository;
+        this.transitDao = transitDao;
         this.distanceMatrixResolver = distanceMatrixResolver;
     }
 
@@ -34,13 +31,11 @@ public class GoogleTransitService implements TransitService {
         final DistanceMatrix matrix = distanceMatrixResolver.resolveMatrix(context, transit);
         final Distance distance = distanceMatrixNullHandler.unpack(matrix);
         transit.setDistance(distance.humanReadable);
-        transitRepository.save(transit);
+        transitDao.trySave(transit);
     }
 
     @Override
     public List<Transit> getAll() {
-        final List<Transit> transits = new ArrayList<>();
-        transitRepository.findAll().forEach(transits::add);
-        return transits;
+        return transitDao.getAll();
     }
 }

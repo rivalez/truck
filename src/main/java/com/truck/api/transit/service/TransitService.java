@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface TransitService {
     void addTransit(Transit transit);
-
     List<Transit> getAll();
 }
