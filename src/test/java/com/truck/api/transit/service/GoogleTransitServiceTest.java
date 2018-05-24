@@ -9,6 +9,9 @@ import com.truck.api.transit.repository.TransitRepository;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
@@ -27,7 +30,8 @@ public class GoogleTransitServiceTest {
         Distance distance = new Distance();
         distance.humanReadable = "";
         DistanceMatrix distanceMatrix = new DistanceMatrix(new String[]{}, new String[]{}, new DistanceMatrixRow[]{});
-        when(distanceMatrixResolverStub.resolveMatrix(any(), isA(Transit.class))).thenReturn(distanceMatrix);
+        Future<DistanceMatrix> distanceMatrixF = CompletableFuture.completedFuture(distanceMatrix);
+        when(distanceMatrixResolverStub.resolveMatrix(any(), isA(Transit.class))).thenReturn(distanceMatrixF);
         when(distanceMatrixNullHandler.unpack(any())).thenReturn(distance);
         this.transitDao = new TransitDao(transitRepositorySpy, transitValidator);
         this.sut = new GoogleTransitService(context, distanceMatrixNullHandler, transitDao, distanceMatrixResolverStub);

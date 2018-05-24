@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @Service
 public class GoogleTransitService implements TransitService {
@@ -28,9 +30,13 @@ public class GoogleTransitService implements TransitService {
     }
 
     public void addTransit(Transit transit) {
-        final DistanceMatrix matrix = distanceMatrixResolver.resolveMatrix(context, transit);
-        final Distance distance = distanceMatrixNullHandler.unpack(matrix);
-        transit.setDistance(distance.humanReadable);
+        final Future<DistanceMatrix> matrix = distanceMatrixResolver.resolveMatrix(context, transit);
+        try {
+            final Distance distance = distanceMatrixNullHandler.unpack(matrix.get());
+            transit.setDistance(distance.humanReadable);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
         transitDao.trySave(transit);
     }
 

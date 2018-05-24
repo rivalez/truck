@@ -10,6 +10,8 @@ import com.truck.api.transit.model.Transit;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,10 +19,14 @@ import java.util.logging.Logger;
 class DistanceMatrixResolver {
     private final Logger logger = Logger.getLogger(DistanceMatrixResolver.class.getName());
 
-    DistanceMatrix resolveMatrix(final GeoApiContext context, final Transit transit) {
-        DistanceMatrix distanceMatrix = null;
+    Future<DistanceMatrix> resolveMatrix(final GeoApiContext context, final Transit transit) {
         final DistanceMatrixApiRequest distanceMatrixRequest =
                 DistanceMatrixApi.newRequest(context);
+        return CompletableFuture.supplyAsync(() -> calculateDistanceMatrix(distanceMatrixRequest, transit));
+    }
+
+    private DistanceMatrix calculateDistanceMatrix(DistanceMatrixApiRequest distanceMatrixRequest, Transit transit) {
+        DistanceMatrix distanceMatrix = null;
         try {
             distanceMatrix = distanceMatrixRequest
                     .origins(transit.getSourceAddress())
