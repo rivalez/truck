@@ -7,6 +7,7 @@ import com.truck.api.transit.model.Transit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -33,7 +34,7 @@ public class GoogleTransitService implements TransitService {
         final Future<DistanceMatrix> matrix = distanceMatrixResolver.resolveMatrix(context, transit);
         try {
             final Distance distance = distanceMatrixNullHandler.unpack(matrix.get());
-            transit.setDistance(distance.humanReadable);
+            transit.setDistance(BigDecimal.valueOf(distance.inMeters));
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

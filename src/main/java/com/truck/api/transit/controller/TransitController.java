@@ -22,11 +22,6 @@ public class TransitController {
     @RequestMapping(path = "/transits", method = RequestMethod.POST)
     public ResponseEntity addTransit(@RequestBody Transit transit) {
         transitService.addTransit(transit);
-        return new ResponseEntity<>(transit, HttpStatus.CREATED);
-    }
-
-    @RequestMapping(path = "/transits", method = RequestMethod.GET)
-    public ResponseEntity getTransits() {
-        return new ResponseEntity<>(transitService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

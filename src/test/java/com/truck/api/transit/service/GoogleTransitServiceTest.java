@@ -22,8 +22,8 @@ public class GoogleTransitServiceTest {
     private TransitRepository transitRepositorySpy = mock(TransitRepository.class);
     private TransitValidator transitValidator = mock(TransitValidator.class);
     private GeoApiContext context = mock(GeoApiContext.class);
-    private TransitDao transitDao;
-    private GoogleTransitService sut;
+    private final TransitDao transitDao = new TransitDao(transitRepositorySpy, transitValidator);
+    private final GoogleTransitService sut = new GoogleTransitService(context, distanceMatrixNullHandler, transitDao, distanceMatrixResolverStub);
 
     @Before
     public void setUp() {
@@ -33,8 +33,6 @@ public class GoogleTransitServiceTest {
         Future<DistanceMatrix> distanceMatrixF = CompletableFuture.completedFuture(distanceMatrix);
         when(distanceMatrixResolverStub.resolveMatrix(any(), isA(Transit.class))).thenReturn(distanceMatrixF);
         when(distanceMatrixNullHandler.unpack(any())).thenReturn(distance);
-        this.transitDao = new TransitDao(transitRepositorySpy, transitValidator);
-        this.sut = new GoogleTransitService(context, distanceMatrixNullHandler, transitDao, distanceMatrixResolverStub);
     }
 
     @Test

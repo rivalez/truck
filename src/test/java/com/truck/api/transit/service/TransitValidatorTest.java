@@ -5,7 +5,6 @@ import com.truck.api.transit.model.Transit;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
 
 import static org.junit.Assert.assertFalse;
@@ -31,7 +30,7 @@ public class TransitValidatorTest {
         transit.setPrice(BigDecimal.ONE);
         transit.setSourceAddress("");
         transit.setDestAddress("");
-        transit.setDate(Date.valueOf(LocalDate.now()));
+        transit.setDate(LocalDate.now());
         //act
         boolean result = validator.validate(transit);
         //assert
@@ -42,8 +41,8 @@ public class TransitValidatorTest {
     public void shouldReturnTrue_whenTransitIsComplete() {
         //assign
         final Transit transit = new Transit();
-        transit.setDate(Date.valueOf(LocalDate.now()));
-        transit.setDistance("0 km");
+        transit.setDate(LocalDate.now());
+        transit.setDistance(BigDecimal.ONE);
         transit.setPrice(BigDecimal.ONE);
         transit.setSourceAddress("");
         transit.setDestAddress("");

@@ -6,25 +6,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Transit {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @JsonProperty("source_address")
     private String sourceAddress;
     @JsonProperty("destination_address")
     private String destAddress;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date date;
+    private LocalDate date;
     private BigDecimal price;
-    private String distance;
+    private BigDecimal distance;
 
     public String getSourceAddress() {
         return sourceAddress;
@@ -34,7 +35,7 @@ public final class Transit {
         return destAddress;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -50,7 +51,7 @@ public final class Transit {
         this.destAddress = destAddress;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -58,11 +59,11 @@ public final class Transit {
         this.price = price;
     }
 
-    public String getDistance() {
+    public BigDecimal getDistance() {
         return distance;
     }
 
-    public void setDistance(String distance) {
+    public void setDistance(BigDecimal distance) {
         this.distance = distance;
     }
 }

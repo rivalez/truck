@@ -2,12 +2,14 @@ package com.truck.api.transit.service;
 
 import com.truck.api.transit.model.Transit;
 import com.truck.api.transit.repository.TransitRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
-@Service
+import static java.util.stream.Collectors.toList;
+
+@Repository
 class TransitDao {
     private final TransitRepository transitRepository;
     private final TransitValidator transitValidator;
@@ -26,8 +28,8 @@ class TransitDao {
     }
 
     List<Transit> getAll() {
-        final List<Transit> transits = new ArrayList<>();
-        transitRepository.findAll().forEach(transits::add);
-        return transits;
+        return Stream.of(transitRepository.findAll())
+                .map(transit -> transit.iterator().next())
+                .collect(toList());
     }
 }

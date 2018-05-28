@@ -26,6 +26,5 @@ public class TransitDaoTest {
         final Transit transit = new Transit();
         //act
         transitDao.trySave(transit);
-        //assert
     }
 }
