@@ -10,13 +10,16 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class DailyReportProviderTest {
+    private static final String TOTAL_DISTANCE_IN_KM = "12001km";
+    private static final String TOTAL_AMOUNT_IN_PLN = "10001PLN";
     private DailyReportProvider provider = new DailyReportProvider();
 
     @Test
-    public void shouldReturnFullDailyReport() {
+    public void shouldConvertTransits() {
         //assign
         Transit transitWithBigDistance = TransitTestBuilder.builder().withDate(LocalDate.of(2018, 3, 15))
                 .withDestAddress("")
@@ -35,7 +38,7 @@ public class DailyReportProviderTest {
         //act
         DailyReport report = provider.provide(transits);
         //assert
-        assertNotNull(report.getDistance());
-        assertNotNull(report.getPrice());
+        assertThat(report.getDistance().toString()).isEqualToIgnoringCase(TOTAL_DISTANCE_IN_KM);
+        assertThat(report.getPrice().toString()).isEqualToIgnoringCase(TOTAL_AMOUNT_IN_PLN);
     }
 }

@@ -29,7 +29,6 @@ public class ReportControllerTest {
     @Test
     public void shouldAcceptParams() throws Exception {
         String date = LocalDate.now().toString();
-
         this.mockMvc.perform(get("/reports/daily")
                 .param("start_date", date)
                 .param("end_date", date))

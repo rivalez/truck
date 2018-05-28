@@ -25,4 +25,10 @@ public class TransitReportService implements ReportService {
         List<Transit> foundTransits = transitRepository.findByDateBetween(from, till);
         return dailyReportProvider.provide(foundTransits);
     }
+
+    @Override
+    public List<MonthlyReport> createMonthlyReport() {
+        transitRepository.findAll();
+        return null;
+    }
 }

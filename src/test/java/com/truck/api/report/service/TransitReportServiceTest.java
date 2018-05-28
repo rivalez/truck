@@ -41,10 +41,9 @@ public class TransitReportServiceTest {
     }
 
     @Test
-    public void shouldReturnFullReportService() {
+    public void shouldReturnFullReport() {
         //when
         DailyReport dailyReport = reportService.createDailyReport(FROM, TILL);
-
         //then
         assertThat(dailyReport.getDistance().toString()).isEqualToIgnoringCase("1000.00km");
         assertThat(dailyReport.getPrice().toString()).isEqualToIgnoringCase("1000.00PLN");
