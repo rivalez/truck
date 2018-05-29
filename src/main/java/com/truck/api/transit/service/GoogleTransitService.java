@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class GoogleTransitService implements TransitService {
@@ -18,6 +20,7 @@ public class GoogleTransitService implements TransitService {
     private final DistanceMatrixNullHandler distanceMatrixNullHandler;
     private final TransitDao transitDao;
     private final DistanceMatrixResolver distanceMatrixResolver;
+    private static final Logger logger = Logger.getLogger(GoogleTransitService.class.getName());
 
     @Autowired
     GoogleTransitService(GeoApiContext context,
@@ -34,11 +37,15 @@ public class GoogleTransitService implements TransitService {
         final Future<DistanceMatrix> matrix = distanceMatrixResolver.resolveMatrix(context, transit);
         try {
             final Distance distance = distanceMatrixNullHandler.unpack(matrix.get());
-            transit.setDistance(BigDecimal.valueOf(distance.inMeters));
+            transit.setDistance(BigDecimal.valueOf(convertToKMs(distance)));
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, e.getMessage());
         }
         transitDao.trySave(transit);
+    }
+
+    private long convertToKMs(Distance distance) {
+        return distance.inMeters / 1000;
     }
 
     @Override

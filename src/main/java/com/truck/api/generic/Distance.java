@@ -1,5 +1,7 @@
 package com.truck.api.generic;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.math.BigDecimal;
 
 public class Distance {
@@ -15,6 +17,11 @@ public class Distance {
         dist.numericDistance = numericDistance;
         dist.unit = unit;
         return dist;
+    }
+
+    @JsonValue
+    public String getDistance() {
+        return numericDistance + unit;
     }
 
     @Override

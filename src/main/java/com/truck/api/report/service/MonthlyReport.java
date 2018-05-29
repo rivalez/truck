@@ -19,15 +19,15 @@ public class MonthlyReport {
         return distance;
     }
 
-    public String getAvgDistance() {
+    String getAvgDistance() {
         return avgDistance;
     }
 
-    public String getAvgPrice() {
+    String getAvgPrice() {
         return avgPrice;
     }
 
-    public static final class MonthlyReportBuilder {
+    static final class MonthlyReportBuilder {
         private String date;
         private String distance;
         private String avgDistance;
@@ -36,31 +36,31 @@ public class MonthlyReport {
         private MonthlyReportBuilder() {
         }
 
-        public static MonthlyReportBuilder builder() {
+        static MonthlyReportBuilder builder() {
             return new MonthlyReportBuilder();
         }
 
-        public MonthlyReportBuilder withDate(String date) {
+        MonthlyReportBuilder withDate(String date) {
             this.date = date;
             return this;
         }
 
-        public MonthlyReportBuilder withDistance(String distance) {
+        MonthlyReportBuilder withDistance(String distance) {
             this.distance = distance;
             return this;
         }
 
-        public MonthlyReportBuilder withAvgDistance(String avgDistance) {
+        MonthlyReportBuilder withAvgDistance(String avgDistance) {
             this.avgDistance = avgDistance;
             return this;
         }
 
-        public MonthlyReportBuilder withAvgPrice(String avgPrice) {
+        MonthlyReportBuilder withAvgPrice(String avgPrice) {
             this.avgPrice = avgPrice;
             return this;
         }
 
-        public MonthlyReport build() {
+        MonthlyReport build() {
             MonthlyReport monthlyReport = new MonthlyReport();
             monthlyReport.date = this.date;
             monthlyReport.distance = this.distance;

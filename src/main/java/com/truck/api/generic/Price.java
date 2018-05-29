@@ -1,5 +1,7 @@
 package com.truck.api.generic;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.math.BigDecimal;
 
 public class Price {
@@ -14,6 +16,11 @@ public class Price {
         price.numericPrice = numericPrice;
         price.currency = currency;
         return price;
+    }
+
+    @JsonValue
+    public String getPrice() {
+        return numericPrice + currency;
     }
 
     @Override
