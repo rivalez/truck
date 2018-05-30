@@ -12,8 +12,16 @@ import static java.util.stream.Collectors.summarizingDouble;
 @Component
 class MonthlyReportCreator {
     MonthlyReport create(Map.Entry<String, List<Transit>> transits) {
-        final DoubleSummaryStatistics distanceStatistics = transits.getValue().stream().collect(summarizingDouble((Transit tran) -> tran.getDistance().doubleValue()));
-        final String priceAverage = String.valueOf(transits.getValue().stream().collect(summarizingDouble((Transit tran) -> tran.getPrice().doubleValue())).getAverage());
+        final DoubleSummaryStatistics distanceStatistics = transits.getValue()
+                .stream()
+                .collect(summarizingDouble(
+                        (Transit tran) -> tran.getDistance()
+                                .doubleValue()));
+        final String priceAverage = String.valueOf(transits.getValue()
+                .stream()
+                .collect(summarizingDouble(
+                        (Transit tran) -> tran.getPrice().doubleValue()))
+                .getAverage());
         return MonthlyReport.MonthlyReportBuilder.builder()
                 .withDate(transits.getKey())
                 .withAvgPrice(priceAverage)

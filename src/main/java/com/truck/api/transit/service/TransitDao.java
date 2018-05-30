@@ -5,9 +5,6 @@ import com.truck.api.transit.repository.TransitRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
 
 @Repository
 class TransitDao {
@@ -28,8 +25,6 @@ class TransitDao {
     }
 
     List<Transit> getAll() {
-        return Stream.of(transitRepository.findAll())
-                .map(transit -> transit.iterator().next())
-                .collect(toList());
+        return transitRepository.findAll();
     }
 }
