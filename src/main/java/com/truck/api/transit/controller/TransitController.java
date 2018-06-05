@@ -3,6 +3,7 @@ package com.truck.api.transit.controller;
 import com.truck.api.transit.model.Transit;
 import com.truck.api.transit.service.TransitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class TransitController {
     }
 
     @RequestMapping(path = "/transits", method = RequestMethod.GET)
-    public ResponseEntity getTransits() {
-        return new ResponseEntity<>(transitService.getAll(), HttpStatus.OK);
+    public ResponseEntity getTransits(Pageable pageable) {
+        return new ResponseEntity<>(transitService.getAll(pageable), HttpStatus.OK);
     }
 }

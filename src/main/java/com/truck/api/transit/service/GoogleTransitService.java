@@ -5,10 +5,11 @@ import com.google.maps.model.Distance;
 import com.google.maps.model.DistanceMatrix;
 import com.truck.api.transit.model.Transit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
@@ -48,8 +49,7 @@ public class GoogleTransitService implements TransitService {
         return distance.inMeters / 1000;
     }
 
-    @Override
-    public List<Transit> getAll() {
-        return transitDao.getAll();
+    public Page<Transit> getAll(Pageable pageable) {
+        return transitDao.getAll(pageable);
     }
 }

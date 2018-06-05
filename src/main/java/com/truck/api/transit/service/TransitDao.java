@@ -2,9 +2,9 @@ package com.truck.api.transit.service;
 
 import com.truck.api.transit.model.Transit;
 import com.truck.api.transit.repository.TransitRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 class TransitDao {
@@ -24,7 +24,7 @@ class TransitDao {
         }
     }
 
-    List<Transit> getAll() {
-        return transitRepository.findAll();
+    Page<Transit> getAll(Pageable pageable) {
+        return transitRepository.findAll(pageable);
     }
 }
