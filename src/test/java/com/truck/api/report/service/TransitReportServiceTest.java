@@ -26,6 +26,8 @@ public class TransitReportServiceTest {
     private DailyReportProvider dailyReportProvider;
     @Autowired
     private TransitRepository transitRepository;
+    @Autowired
+    private MonthlyReportProvider monthlyReportProvider;
     private ReportService reportService;
 
     @Before
@@ -37,7 +39,7 @@ public class TransitReportServiceTest {
                 .withDistance(BigDecimal.valueOf(200))
                 .withPrice(BigDecimal.valueOf(200))
                 .build()).limit(5).collect(Collectors.toList()));
-        reportService = new TransitReportService(transitRepository, dailyReportProvider);
+        reportService = new TransitReportService(transitRepository, dailyReportProvider, monthlyReportProvider);
     }
 
     @Test

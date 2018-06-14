@@ -1,5 +1,6 @@
 package com.truck.api.report.service;
 
+import com.google.common.collect.Lists;
 import com.truck.api.report.model.DailyReport;
 import com.truck.api.transit.model.Transit;
 import com.truck.api.transit.repository.TransitRepository;
@@ -13,11 +14,13 @@ import java.util.List;
 public class TransitReportService implements ReportService {
     private TransitRepository transitRepository;
     private DailyReportProvider dailyReportProvider;
+    private MonthlyReportProvider monthlyReportProvider;
 
     @Autowired
-    TransitReportService(TransitRepository transitRepository, DailyReportProvider dailyReportProvider) {
+    TransitReportService(TransitRepository transitRepository, DailyReportProvider dailyReportProvider, MonthlyReportProvider monthlyReportProvider) {
         this.transitRepository = transitRepository;
         this.dailyReportProvider = dailyReportProvider;
+        this.monthlyReportProvider = monthlyReportProvider;
     }
 
     @Override
@@ -28,7 +31,6 @@ public class TransitReportService implements ReportService {
 
     @Override
     public List<MonthlyReport> createMonthlyReport() {
-        transitRepository.findAll();
-        return null;
+        return monthlyReportProvider.provide(Lists.newArrayList(transitRepository.findAll()));
     }
 }

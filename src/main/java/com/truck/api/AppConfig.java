@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDate;
+
 @Configuration
 public class AppConfig {
 
@@ -14,5 +16,10 @@ public class AppConfig {
     @Bean
     public GeoApiContext getGeoApiContext() {
         return new GeoApiContext.Builder().apiKey(apiKey).build();
+    }
+
+    @Bean
+    public LocalDate getLocalDate() {
+        return LocalDate.now();
     }
 }
